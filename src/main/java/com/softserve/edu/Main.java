@@ -9,6 +9,10 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
@@ -17,15 +21,20 @@ import java.util.Collections;
  *
  */
 
+@Component
 public class Main {
+
     public static void main(String[] args) {
 
+        ApplicationContext context = new AnnotationConfigApplicationContext("com.softserve.edu.config");
+        SessionFactory sessionFactory = (SessionFactory) context.getBean("sessionFactory");
+
         // bootstrapping Hibernate
-        StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder()
+        /* StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder()
             .configure().build();
         Metadata metadata = new MetadataSources(standardServiceRegistry)
                 .getMetadataBuilder().build();
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build(); */
 
         // starting session
         Session session = sessionFactory.openSession();
